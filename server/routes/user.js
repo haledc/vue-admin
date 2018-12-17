@@ -21,7 +21,7 @@ router.post('/register', async ctx => {
     console.log(ctx.request.body)
     const exist = await User.findOne({ email })
     if (exist) {
-      failureResponse(ctx, 400, '邮箱重复,请重新输入或者去登录！')
+      failureResponse(ctx, 200, '邮箱重复,请重新输入或者去登录！')
       return
     }
     const newUser = new User({
@@ -43,14 +43,14 @@ router.post('/login', async ctx => {
     const { email, password } = ctx.request.body
     const user = await User.findOne({ email })
     if (!user) {
-      failureResponse(ctx, 400, '用户不存在')
+      failureResponse(ctx, 200, '用户不存在')
     } else {
       const isMatch = await comparePwd(password, user.password)
       if (isMatch) {
         const token = createToken({ id: user._id, name: user.username })
         successResponse(ctx, token)
       } else {
-        failureResponse(ctx, 400, '密码不正确')
+        failureResponse(ctx, 200, '密码不正确，请重新输入！')
       }
     }
   } catch (err) {

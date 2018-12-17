@@ -60,11 +60,11 @@ const secret = 'secret'
 
 /**
  * 生成token
- * @param rule
+ * @param data
  * @returns {*}
  */
-const createToken = rule => {
-  return jwt.sign(rule, secret)
+const createToken = data => {
+  return jwt.sign(data, secret, { expiresIn: 3600 })
 }
 
 /**
