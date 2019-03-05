@@ -1,29 +1,23 @@
 # vue-admin
 
-## Project setup
-```
-yarn install
-```
+## 简单的 admin 后台 demo
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+### 技术栈
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+Vue + ElementUI + Koa + MongoDB
 
-### Run your tests
-```
-yarn run test
-```
+### 已实现功能
 
-### Lints and fixes files
-```
-yarn run lint
-```
+- 注册登录功能
+- 密码验证
+- jwt 验证 (到期需要重新登录)
+- 表格增删改查/分页
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 后续功能
+
+- 职权页面 (动态路由)
+- 更多图表
+
+### 补充
+
+koa-jwt 验证是统一验证后端 API 的路径，如果前端打包后和后端共用一个端口，随着项目的越来越庞大复杂，前端页面的增加和后端 api 的增加，统一验证路径不仅要考虑后端 API路径还有前端路径，到时候会变得很麻烦。这时候，建议前端和后端使用不同的端口。
