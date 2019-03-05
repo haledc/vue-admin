@@ -1,13 +1,14 @@
 {
   "restartable": "rs",
+  "verbose": true,
   "ignore": [
     ".git",
     "node_modules/**/node_modules",
     ".eslintrc.js",
+    "dist",
     "public",
     "src"
   ],
-  "verbose": true,
   "env": {
     "NODE_ENV": "development"
   },

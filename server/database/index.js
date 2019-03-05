@@ -2,12 +2,13 @@ const mongoose = require('mongoose')
 
 const DB_URL = 'mongodb://127.0.0.1:27017/vue-admin'
 
-mongoose.connect(DB_URL)
+mongoose
+  .connect(DB_URL, { useNewUrlParser: true })
+  .then(() => {
+    console.log('MongoDb server connected successfully!')
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
-const connection = mongoose.connection
-
-connection.on('connected', () => console.log('MongoDB server connected successfully!'))
-connection.on('error', () => console.log('MongoDB server connected failed!'))
-connection.on('disconnected', () => console.log('MongoDB server is disconnected!'))
-
-module.exports = connection
+module.exports = mongoose

@@ -23,8 +23,7 @@ const profileSchema = new Schema({
     required: true
   },
   remark: {
-    type: String,
-    required: true
+    type: String
   },
   date: {
     type: Date,

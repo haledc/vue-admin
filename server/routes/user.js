@@ -16,58 +16,48 @@ const router = new Router({
 })
 
 router.post('/register', async ctx => {
-  try {
-    const { username, password, email, role } = ctx.request.body
-    console.log(ctx.request.body)
-    const exist = await User.findOne({ email })
-    if (exist) {
-      failureResponse(ctx, 200, '邮箱重复,请重新输入或者去登录！')
-      return
-    }
-    const newUser = new User({
-      username,
-      password: await encrypt(password),
-      email,
-      role,
-      avatar: createAvatar(email)
-    })
-    const user = await newUser.save()
-    successResponse(ctx, user)
-  } catch (err) {
-    failureResponse(ctx, 500, err.message)
+  const { username, password, email, role } = ctx.request.body
+  const exist = await User.findOne({ email })
+  if (exist) {
+    failureResponse(ctx, 200, '邮箱重复,请重新输入或者去登录！')
+    return
   }
+  const encryptPwd = await encrypt(password)
+
+  const newUser = new User({
+    username,
+    password: encryptPwd,
+    email,
+    role,
+    avatar: createAvatar(email)
+  })
+  const user = await newUser.save()
+  successResponse(ctx, user)
 })
 
 router.post('/login', async ctx => {
-  try {
-    const { email, password } = ctx.request.body
-    const user = await User.findOne({ email })
-    if (!user) {
-      failureResponse(ctx, 200, '用户不存在')
+  const { email, password } = ctx.request.body
+  const user = await User.findOne({ email })
+  if (!user) {
+    failureResponse(ctx, 200, '用户不存在')
+  } else {
+    const isMatch = await comparePwd(password, user.password)
+    if (isMatch) {
+      const token = createToken({ id: user._id, name: user.username })
+      successResponse(ctx, token)
     } else {
-      const isMatch = await comparePwd(password, user.password)
-      if (isMatch) {
-        const token = createToken({ id: user._id, name: user.username })
-        successResponse(ctx, token)
-      } else {
-        failureResponse(ctx, 200, '密码不正确，请重新输入！')
-      }
+      failureResponse(ctx, 200, '密码不正确，请重新输入！')
     }
-  } catch (err) {
-    failureResponse(ctx, 500, err.message)
   }
 })
 
 router.get('/user_info', async ctx => {
-  try {
-    const { token } = ctx.headers
-    const { id } = verifyToken(token)
-    const user = await User.findOne({ _id: id })
-    const { email, username, avatar, role } = user
-    successResponse(ctx, { email, username, avatar, role })
-  } catch (err) {
-    failureResponse(ctx, 500, err.message)
-  }
+  const { authorization } = ctx.headers
+  const token = authorization.split(' ')[1] // 解析 Bearer <token>
+  const { id } = verifyToken(token)
+  const user = await User.findOne({ _id: id })
+  const { email, username, avatar, role } = user
+  successResponse(ctx, { email, username, avatar, role })
 })
 
 module.exports = router

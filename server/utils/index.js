@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt')
 const gravatar = require('gravatar')
 const jwt = require('jsonwebtoken')
 
+const jwtSecret = 'my_secret'
+
 /**
  * 成功返回
  * @param ctx
@@ -33,9 +35,9 @@ const failureResponse = (ctx, code, msg) => {
  * @param pwd
  * @returns {Promise<void>}
  */
-const encrypt = async pwd => {
+const encrypt = pwd => {
   const salt = 10
-  return await bcrypt.hash(pwd, salt)
+  return bcrypt.hash(pwd, salt)
 }
 
 /**
@@ -44,19 +46,17 @@ const encrypt = async pwd => {
  * @param hashPwd
  * @returns {Promise<void>}
  */
-const comparePwd = async (pwd, hashPwd) => {
-  return await bcrypt.compare(pwd, hashPwd)
+const comparePwd = (pwd, hashPwd) => {
+  return bcrypt.compare(pwd, hashPwd)
 }
 
 /**
- * 生成头像url
+ * 生成头像 url
  * @param email
  * @returns {*}
  */
-const createAvatar = email => gravatar.url(email, { s: '200', r: 'pg', d: 'mm' })
-
-// secret
-const secret = 'secret'
+const createAvatar = email =>
+  gravatar.url(email, { s: '200', r: 'pg', d: 'mm' })
 
 /**
  * 生成token
@@ -64,31 +64,25 @@ const secret = 'secret'
  * @returns {*}
  */
 const createToken = data => {
-  return jwt.sign(data, secret, { expiresIn: 3600 })
+  return jwt.sign(data, jwtSecret, { expiresIn: '7 days' })
 }
 
 /**
- * 验证token
+ * 解密 token
  * @param token
  * @returns {*}
  */
 const verifyToken = token => {
-  return jwt.verify(token, secret)
-}
-
-const checkToken = ctx => {
-  const { token } = ctx.headers
-  const { id } = verifyToken(token)
-  return id !== undefined
+  return jwt.verify(token, jwtSecret)
 }
 
 module.exports = {
   successResponse,
   failureResponse,
   encrypt,
-  createAvatar,
   comparePwd,
+  createAvatar,
+  jwtSecret,
   createToken,
-  verifyToken,
-  checkToken
+  verifyToken
 }
