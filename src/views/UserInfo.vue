@@ -3,7 +3,7 @@
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :span="8">
         <div class="user-avatar">
-          <img :src="userInfo.avatar" alt="avatar"/>
+          <img :src="userInfo.avatar" alt="avatar">
         </div>
       </el-col>
       <el-col :span="16">
@@ -34,31 +34,31 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-  .user-info
-    margin-top 300px
-    display flex
-    flex-direction column
-    justify-content center
+.user-info
+  margin-top: 300px
+  display: flex
+  flex-direction: column
+  justify-content: center
 
-    .user-avatar
-      text-align center
+  .user-avatar
+    text-align: center
 
-      img
-        width 150px
-        height 150px
-        border-radius 50%
+    img
+      width: 150px
+      height: 150px
+      border-radius: 50%
 
-    .user-detail
-      .user-item
-        position relative
-        padding 26px
-        font-size 28px
-        color #333
+  .user-detail
+    .user-item
+      position: relative
+      padding: 26px
+      font-size: 28px
+      color: #333
 
-        span
-          text-align center
-          margin-top 20px
-          margin-left 20px
-          font-size 20px
-          font-weight bolder
+      span
+        text-align: center
+        margin-top: 20px
+        margin-left: 20px
+        font-size: 20px
+        font-weight: bolder
 </style>

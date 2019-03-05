@@ -98,7 +98,6 @@ export default {
                 }
               })
           } else if (this.dialog.option === 'edit') {
-            console.log(this.profileForm)
             this.$axios.post('/api/profile/edit', this.profileForm)
               .then(res => {
                 if (res.data.success === true) {

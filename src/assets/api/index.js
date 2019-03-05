@@ -17,30 +17,33 @@ function endLoading() {
 }
 
 // 请求拦截
-axios.interceptors.request.use(config => {
-  startLoading()
-  if (localStorage.eleToken) {
-    config.headers.token = localStorage.eleToken
-  }
-  return config
-}, err => Promise.reject(err))
+axios.interceptors.request.use(
+  config => {
+    startLoading()
+    if (localStorage.authorization) {
+      config.headers.authorization = localStorage.authorization
+    }
+    return config
+  },
+  err => Promise.reject(err)
+)
 
 // 响应拦截
-axios.interceptors.response.use(config => {
-  endLoading()
-  return config
-}, err => {
-  endLoading()
-  Message.error(err.response.data)
-  const { status, data } = err.response
-  if (status === 500) {
-    if (data.msg === 'jwt expired') {
-      Message.error('token失效请重新登录')
-      localStorage.removeItem('eleToken')
+axios.interceptors.response.use(
+  config => {
+    endLoading()
+    return config
+  },
+  err => {
+    endLoading()
+    const { status } = err.response
+    if (status === 401) {
+      Message.error('token失效，请重新登录')
+      localStorage.removeItem('authorization')
       router.push('/login')
     }
+    return Promise.reject(err)
   }
-  return Promise.reject(err)
-})
+)
 
 export default axios
