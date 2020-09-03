@@ -16,12 +16,20 @@
             </el-menu-item>
           </router-link>
           <div v-for="(item, index) in items" :key="index">
-            <el-submenu v-if="item.children" :index="item.path" :key="item.path">
+            <el-submenu
+              v-if="item.children"
+              :index="item.path"
+              :key="item.path"
+            >
               <template slot="title">
                 <i :class="item.icon"></i>
                 <span slot="title">{{ item.name }}</span>
               </template>
-              <router-link v-for="(subItem, index) in item.children" :to="subItem.path" :key="index">
+              <router-link
+                v-for="(subItem, index) in item.children"
+                :to="subItem.path"
+                :key="index"
+              >
                 <el-menu-item :index="subItem.path">
                   <span slot="title">{{ subItem.name }}</span>
                 </el-menu-item>
@@ -36,40 +44,38 @@
 
 <script>
 export default {
-  name: 'left-nav',
+  name: "LeftNav",
   data() {
     return {
       items: [
         {
-          icon: 'el-icon-goods',
-          name: '资金管理',
-          path: 'fund',
-          children: [
-            { path: 'fundList', name: '资金流水' }
-          ]
+          icon: "el-icon-goods",
+          name: "资金管理",
+          path: "fund",
+          children: [{ path: "fundList", name: "资金流水" }],
         },
         {
-          icon: 'el-icon-date',
-          name: '信息管理',
-          path: 'Info',
-          children: [
-            { path: 'userInfo', name: '个人信息' }
-          ]
-        }
-      ]
-    }
-  }
-}
+          icon: "el-icon-date",
+          name: "信息管理",
+          path: "Info",
+          children: [{ path: "userInfo", name: "个人信息" }],
+        },
+      ],
+    };
+  },
+};
 </script>
 
-<style scoped lang="stylus">
-  .left-nav
-    position absolute
-    top 81px
-    left 0
-    z-index 99
+<style scoped lang="scss">
+.left-nav {
+  position: absolute;
+  top: 81px;
+  left: 0;
+  z-index: 99;
 
-    .el-menu-vertical-bar
-      width 200px
-      min-height 800px
+  .el-menu-vertical-bar {
+    width: 200px;
+    min-height: 800px;
+  }
+}
 </style>

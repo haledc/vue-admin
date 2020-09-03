@@ -1,22 +1,24 @@
 <template>
   <div class="not-found">
-    <img src="../assets/images/404.gif" alt="img"/>
+    <img src="../assets/images/404.gif" alt="img" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'notFound'
-}
+  name: "NotFound",
+};
 </script>
 
-<style scoped lang="stylus">
-  .not-found
-    width 100%
-    height 100%
-    overflow hidden
+<style scoped lang="scss">
+.not-found {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 
-    img
-      width 100%
-      height 100%
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

@@ -1,34 +1,34 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
   type: {
     type: String,
-    required: true
+    required: true,
   },
   desc: {
     type: String,
-    required: true
+    required: true,
   },
   income: {
     type: Number,
-    required: true
+    required: true,
   },
   expend: {
     type: Number,
-    required: true
+    required: true,
   },
   cash: {
     type: Number,
-    required: true
+    required: true,
   },
   remark: {
-    type: String
+    type: String,
   },
   date: {
     type: Date,
-    default: Date.now()
-  }
-})
+    default: Date.now(),
+  },
+});
 
-module.exports = mongoose.model('Profile', profileSchema)
+module.exports = mongoose.model("Profile", profileSchema);
